@@ -41,19 +41,27 @@ app.listen(PORT, () => {
 });
 
 
-// PUT 라우트 처리
+// 7. 할일 수정 (PUT) 라우트 처리 및 로그 출력
 app.put('/todo/:id', (req, res) => {
   const id = parseInt(req.params.id);
   const text = (req.body.text || '').trim();
+  
+  // 터미널에 출력될 로그
+  console.log(`PUT /todo/${id}, 내용 : ${text} 요청 처리`);
+
   if (text) {
     todos = todos.map(todo => todo.id === id ? { ...todo, text } : todo);
   }
   res.redirect('/');
 });
 
-// DELETE 라우트 처리
+// 8. 할일 삭제 (DELETE) 라우트 처리 및 로그 출력
 app.delete('/todo/:id', (req, res) => {
   const id = parseInt(req.params.id);
+  
+  // 터미널에 출력될 로그
+  console.log(`DELETE /todo/${id} 요청 처리`);
+
   todos = todos.filter(todo => todo.id !== id);
   res.redirect('/');
 });
