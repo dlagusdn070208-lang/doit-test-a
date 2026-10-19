@@ -3,7 +3,7 @@ const path = require('path');
 const methodOverride = require('method-override');
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3412;
 
 app.use(express.urlencoded({ extended: true }));
 // POST /todo/1?_method=PUT → PUT /todo/1 로 처리
@@ -31,4 +31,23 @@ app.post('/todo', (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`http://localhost:${PORT}`);
+});
+
+
+// 7. 참고사이트(프론트엔드)와 같이 수정처리가 될 수 있도록 PUT 라우트 처리
+app.put('/todo/:id', (req, res) => {
+  const id = parseInt(req.params.id);
+  const text = (req.body.text || '').trim();
+  
+  if (text) {
+    todos = todos.map(todo => todo.id === id ? { ...todo, text } : todo);
+  }
+  res.redirect('/');
+});
+
+// 8. 참고사이트(프론트엔드)와 같이 삭제처리가 될 수 있도록 DELETE 라우트 처리
+app.delete('/todo/:id', (req, res) => {
+  const id = parseInt(req.params.id);
+  todos = todos.filter(todo => todo.id !== id);
+  res.redirect('/');
 });
